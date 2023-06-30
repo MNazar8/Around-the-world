@@ -1,0 +1,24 @@
+.container{
+    background-color: darkkhaki;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 0;
+}
+
+.map{
+background-image: url('../images/mapa.jpg');
+background-size: cover;
+background-position-x: center;
+background-position-y: center;
+height: 300px;
+width: 300px;
+border-radius: 50%;
+object-fit:scale-down
+}
+
+.one_half{
+    margin: 15% 0 0 0;
+}
