@@ -50,7 +50,6 @@ function createActivity() {
       })
     );
   }
-  console.log(typeof input.difficulty);
 
   function handlerSelectSeason(event) {
     setInput({

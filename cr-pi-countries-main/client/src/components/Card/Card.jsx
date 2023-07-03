@@ -1,26 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import styles from '../Card/Card.module.css'
 
 function Card({id, name, imgFlag, continent}) {
   return (
-    <div>
-        <div>
-            <h1>{name}</h1>
-        </div>
-        <div>
-            <img src={imgFlag} alt="" />
-        </div>
-        <div>
-            <h3>{continent}</h3>
-        </div>
+    <div className={styles.individual_card}>        
+            <h5 className={styles.country} >{name}</h5>                
+            <img className={styles.flag} src={imgFlag} alt="" />
+            <h5 className={styles.continent_name}>{continent}</h5>
         {/* <div>
             {activities.length && activities.map(activity => (<h4 key={activity.id}>{activity}</h4>))}
         </div> */}
-        <div>
-            <Link to={`/countries/${id}`}>
-                More Details
+            <Link to={`/countries/${id}`} className={styles.more_detail}>
+                MORE DETAILS
             </Link>
-        </div>
     </div>
   )
 }

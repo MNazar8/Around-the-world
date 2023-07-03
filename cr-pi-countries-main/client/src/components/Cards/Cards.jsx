@@ -1,29 +1,84 @@
-import React, { useEffect } from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { getCountries } from '../../redux/actions'
-import Card from '../Card/card'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCountries } from "../../redux/actions";
+import Card from "../Card/card";
+import FilterAndSort from "../FilterAndSort/FilterAndSort";
+import styles from "../Cards/Cards.module.css";
 
 const Cards = () => {
-const dispatch = useDispatch()
-const allCountries = useSelector(state => state.countries)
+  const dispatch = useDispatch();
+  const allCountries = useSelector(
+    (state) => state.filteredCountries || state.countries
+  );
+  const countriesPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const prevPage = currentPage - 1;
+  const nextPag = currentPage + 1;
+  const firstPage = currentPage - (currentPage - 1);
+  const totalPages = Math.ceil(allCountries.length / countriesPerPage);
+  const lastPage = totalPages;
 
-useEffect(()=>{
-dispatch(getCountries())
-}, [])
+  const handlePrevPage = () => {
+    setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
+  };
 
-return (
-  <div>
-    {allCountries.map(individualCountry => (
-      <Card key={individualCountry.id}
-      id= {individualCountry.id}
-      name= {individualCountry.name}
-      imgFlag= {individualCountry.imgFlag}
-      continent={individualCountry.continent}
-      // activities={individualCountry.Activities}
-      />
-      ))}
-  </div>
-  )
-}
+  const handleNextPage = () => {
+    setCurrentPage((currentPage) => Math.min(currentPage + 1, totalPages));
+  };
 
-export default Cards
+  const handleFirstPage = () => {
+    setCurrentPage((currentPage) => currentPage - (currentPage - 1));
+  };
+
+  const handleLastPage = () => {
+    setCurrentPage((currentPage) => totalPages);
+  };
+
+  const indexOfLastCountry = currentPage * countriesPerPage;
+  const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
+  const currentCountries = allCountries.slice(
+    indexOfFirstCountry,
+    indexOfLastCountry
+  );
+
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
+
+  return (
+    <div>
+      <div>
+        <FilterAndSort />
+      </div>
+      <div className={styles.cards}>
+        {currentCountries.map((individualCountry) => (
+          <Card
+            key={individualCountry.id}
+            id={individualCountry.id}
+            name={individualCountry.name}
+            imgFlag={individualCountry.imgFlag}
+            continent={individualCountry.continent}
+          />
+        ))}
+      </div>
+      <div>
+        <div className={styles.pagination}>
+          <button onClick={handleFirstPage}>First</button>
+          <button onClick={handlePrevPage} hidden={currentPage === 1}>
+            {prevPage}
+          </button>
+          <button className={styles.selected}>{currentPage}</button>
+          <button
+            onClick={handleNextPage}
+            hidden={currentPage === totalPages}
+          >
+            {nextPag}
+          </button>
+          <button onClick={handleLastPage}>Last</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Cards;

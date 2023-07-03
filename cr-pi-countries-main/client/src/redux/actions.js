@@ -15,6 +15,20 @@ export function getCountries() {
     }
 }
 
+export function getCountriesByName(payload) {
+    return async function (dispatch) {
+        try {
+            var response = await axios.get(URL + '?name=' + payload)
+            return dispatch({
+                type: 'GET_COUNTRY_BY_NAME',
+                payload: response.data
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export function getDetail(id) {
     return async function (dispatch) {
         try {
@@ -58,3 +72,30 @@ export function postActivity(payload) {
         }
     }
 }
+
+export const filterByContinents = (continents) => {
+    return {
+        type : 'FILTER_BY_CONTINENTS',
+        payload :continents
+    }
+  }
+   export const filterByActivities = (selectedActivity) => {
+        return {
+            type : 'FILTER_BY_ACTIVITIES',
+            payload :selectedActivity
+        }
+    }
+
+    export const orderByName = (orderBy) => {
+        return {
+          type: 'ORDER_BY_NAME',
+          payload :orderBy,
+        };
+      };
+
+    export const orderByPopulation = (orderByN) => {
+        return {
+          type: 'ORDER_BY_POPULATION',
+          payload :orderByN,
+        };
+      };
