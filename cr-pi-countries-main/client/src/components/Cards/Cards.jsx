@@ -46,8 +46,8 @@ const Cards = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className={styles.cards_container}>
+      <div className={styles.card_filters}>
         <FilterAndSort />
       </div>
       <div className={styles.cards}>

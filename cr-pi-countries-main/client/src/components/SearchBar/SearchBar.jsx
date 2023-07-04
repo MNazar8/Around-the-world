@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { getCountriesByName } from '../../redux/actions';
+import { getCountries, getCountriesByName } from '../../redux/actions';
 import styles from '../SearchBar/SearchBar.module.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar() {
-    
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     const [country, setCountry] = useState('');
 
@@ -14,7 +15,8 @@ export default function SearchBar() {
         setCountry('');
         event.target.reset();}
         else{
-            alert('Write a country name')
+            alert('Write a country name', window.location.reload())
+            
         }
     }
 
@@ -24,10 +26,10 @@ export default function SearchBar() {
     }
 
   return (
-    <div>
-        <form onSubmit={(event)=>handleSubmit(event)} className={styles.search_country}>
-            <input type="text" placeholder='Search a country' onChange={(event)=> handleSearch(event)}/>
-            <button type='submit'>🔍 </button>
+    <div className={styles.div_input}>
+        <form onSubmit={(event)=>handleSubmit(event)} className={styles.search_form}>
+            <input className={styles.input_search} type="text" placeholder='Search a country' onChange={(event)=> handleSearch(event)}/>
+            <button className={styles.search_button}type='submit'>🔍 </button>
         </form>
     </div>
   )

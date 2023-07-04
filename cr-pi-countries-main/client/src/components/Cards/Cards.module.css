@@ -1,10 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+.cards_container{
+    margin: 10px 0 0 0;
+}
+
 .cards{
      display: flex;
      flex-wrap: wrap;
      justify-content: space-around;
      align-items: center;
+     margin: 20px 0 0 0;
+}
+
+.card_filters{
+    position: absolute;
+    top: 6.3%;
+    right: 2%;
 }
 
 .pagination{
