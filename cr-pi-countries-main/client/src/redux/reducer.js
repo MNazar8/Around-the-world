@@ -1,3 +1,14 @@
+import {
+    GET_ALL_COUNTRIES,
+    GET_COUNTRY_BY_NAME,
+    GET_COUNTRY_DETAIL,
+    GET_ACTIVITIES,
+    FILTER_BY_CONTINENTS,
+    FILTER_BY_ACTIVITIES,
+    ORDER_BY_NAME,
+    ORDER_BY_POPULATION,
+} from './actionTypes'
+
 const initialState = {
     countries: [],
     activities: [],
@@ -8,33 +19,33 @@ const initialState = {
 
 export default function reducer(state = initialState, { type, payload }) {
     switch (type) {
-        case 'GET_ALL_COUNTRIES':
+        case GET_ALL_COUNTRIES:
             return {
                 ...state,
                 countries: payload
             }
 
-        case 'GET_COUNTRY_BY_NAME':
+        case GET_COUNTRY_BY_NAME:
             return {
                 ...state,
                 countries: payload, 
                 filteredCountries: payload
             }
 
-        case 'GET_COUNTRY_DETAIL':
+        case GET_COUNTRY_DETAIL:
             return {
                 ...state,
                 detail: payload
             }
 
 
-        case 'GET_ACTIVITIES':
+        case GET_ACTIVITIES:
             return {
                 ...state,
                 activities: payload
             }
 
-        case 'FILTER_BY_CONTINENTS':
+        case FILTER_BY_CONTINENTS:
             const allCountriesFiltered = payload === "All"
                 ? null
                 : state.countries.filter(country => country.continent === payload);
@@ -44,7 +55,7 @@ export default function reducer(state = initialState, { type, payload }) {
                 filteredCountries: allCountriesFiltered
             };
 
-        case 'FILTER_BY_ACTIVITIES':
+        case FILTER_BY_ACTIVITIES:
             const selectedActivity = payload;
             if (selectedActivity === 'All') {
                 return {
@@ -62,7 +73,7 @@ export default function reducer(state = initialState, { type, payload }) {
                 };
             }
 
-        case 'ORDER_BY_NAME':
+        case ORDER_BY_NAME:
             const orderBy = payload;
             if (orderBy === 'All') {
                 return {
@@ -96,7 +107,7 @@ export default function reducer(state = initialState, { type, payload }) {
             }
             break;
 
-        case 'ORDER_BY_POPULATION':
+        case ORDER_BY_POPULATION:
             const orderByNumber = payload;
             if (orderByNumber === 'All') {
                 return {

@@ -18,7 +18,7 @@ function createActivity() {
   const [errors, setErrors] = useState({});
   const [active, setActive] = useState(false);
   const seasons = ["--", "Summer", "Spring", "Winter", "Auttumn"];
-  const difficulties = [1, 2, 3, 4, 5];
+  const difficulties = ["--", 1, 2, 3, 4, 5];
   const [input, setInput] = useState({
     name: "",
     difficulty: "",
@@ -74,15 +74,15 @@ function createActivity() {
     setInput({
       ...input,
       countries: input.countries.includes(event.target.value)
-        ? [...input.countries]
-        : [...input.countries, event.target.value],
+      ? [...input.countries]
+      : [...input.countries, event.target.value],
     });
     setErrors(
       validate({
         ...input,
         countries: [...input.countries, event.target.value],
       })
-    );
+      );    
   }
 
   function handleDeleteSeason(event) {
@@ -102,10 +102,19 @@ function createActivity() {
     event.preventDefault();
     if (!input.name) return alert("Name is required");
     if (!input.difficulty) return alert("Difficulty is required");
+    if (
+      input.difficulty != "1" &&
+      input.difficulty != "2" &&
+      input.difficulty != "3" &&
+      input.difficulty != "4" &&
+      input.difficulty != "5" 
+    ) return alert("Pick a number");
     if (!input.duration) return alert("Duration is required");
-    if (!input.season) return alert("Season is required");
-    if (!input.countries) return alert("Country is required");
-    dispatch(postActivity(input));
+    if (input.season=="--") return alert("Pick a season");
+    if (input.season.length<1) return alert("Season is required");
+    if (input.countries=="--") return alert("Pick a country");
+    if (input.countries.length<1) return alert("Country is required");
+    else dispatch(postActivity(input));
     setInput({
       name: "",
       difficulty: "",
@@ -144,13 +153,23 @@ function createActivity() {
       errors.name = `*Activity named -${input.name}- already exists`;
     } else if (!input.difficulty) {
       errors.difficulty = "Difficulty is required";
+    } else if (
+      input.difficulty!=1 &&
+      input.difficulty!=2 &&
+      input.difficulty!=3 &&
+      input.difficulty!=4 &&
+      input.difficulty!=5 
+      ) {
+      errors.difficulty = "Difficulty must be a number";
     } else if (!input.duration) {
       errors.duration = "Duration is required";
     } else if (input.season.length < 1) {
       errors.season = "You have to choose a season";
     } else if (input.countries.length < 1) {
       errors.countries = "You have to choose a country";
-    } else if (!errors.name) {
+    }else if (errors.name || errors.difficulty) {
+      setActive(false);
+    }else if (!errors.name || !errors.difficulty) {
       setActive(true);
     }
 
@@ -160,7 +179,9 @@ function createActivity() {
   return (
     <div className={styles.form_container}>
       <button className={styles.to_home}>
-        <Link className={styles.home_linl} to="/home">HOME</Link>
+        <Link className={styles.home_linl} to="/home">
+          HOME
+        </Link>
       </button>
       <form
         className={styles.form_head}
@@ -182,9 +203,9 @@ function createActivity() {
           name="difficulty"
           onChange={(event) => handlerSelectDifficulty(event)}
         >
-          {difficulties.map((difficulty) => (
-            <option value={difficulty == 0 ? 1 : difficulty} key={difficulty}>
-              {difficulty}
+          {difficulties.map((diff) => (
+            <option value={Number(diff)} key={diff}>
+              {diff}
             </option>
           ))}
         </select>
@@ -202,7 +223,13 @@ function createActivity() {
         <label>Season</label>
         <select name="season" onChange={(event) => handlerSelectSeason(event)}>
           {seasons.map((season) => (
-            <option value={season == "--" ? input.season.length<1?"Summer":input.season[0] : season} key={season}>
+            <option value={
+              season == "--"
+                  ? input.season.length < 1
+                    ? "Summer"
+                    : input.season[0]
+                  : season
+            } key={season}>
               {season}
             </option>
           ))}
@@ -223,7 +250,13 @@ function createActivity() {
         >
           {sortedCountries.map((country) => (
             <option
-              value={country.name == "--" ? input.countries.length<1?"Argentina":input.countries[0]: country.name}
+              value={
+                country.name == "--"
+                  ? input.countries.length < 1
+                    ? "Argentina"
+                    : input.countries[0]
+                  : country.name
+              }
               key={country.id}
             >
               {country.name}
@@ -242,9 +275,7 @@ function createActivity() {
           </div>
         ))}
         {errors.countries && <p className="error">{errors.countries}</p>}
-        <button className={styles.create_button} type="submit" disabled={!active}>
-          Create Activity
-        </button>
+         <button className={styles.create_button} type="submit" disabled={!active}> Create Activity </button>
       </form>
     </div>
   );

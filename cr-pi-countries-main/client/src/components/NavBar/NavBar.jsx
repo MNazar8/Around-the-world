@@ -3,8 +3,7 @@ import style from "./NavBar.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 
 const NavBar = () => {
-  function loaderCountry(event) {
-    event.preventDefault();
+  function loaderCountry() {
     window.location.reload()
   }
 
