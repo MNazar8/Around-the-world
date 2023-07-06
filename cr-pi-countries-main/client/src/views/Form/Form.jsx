@@ -6,8 +6,7 @@ import styles from "../Form/Form.module.css";
 
 function createActivity() {
   const dispatch = useDispatch();
-  const allCountries = useSelector((state) => state.countries);
-  // console.log(allCountries[0])
+  const allCountries = useSelector((state) => state.countries);  
   allCountries.every((c) => c.name != "--") &&
     allCountries.unshift({ name: "--" });
   const sortedCountries = allCountries.sort((a, b) =>
@@ -33,8 +32,8 @@ function createActivity() {
   }, []);
 
   function handlerChange(event) {
-    setInput({ ...input, [event.target.name]: event.target.value });
-    setErrors(
+    setInput({ ...input, [event.target.name]: event.target.value }); //llena el state del input
+    setErrors( // llena el state del error
       validate({
         ...input,
         [event.target.name]: event.target.value,

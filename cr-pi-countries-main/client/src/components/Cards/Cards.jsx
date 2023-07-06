@@ -14,14 +14,13 @@ const Cards = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const prevPage = currentPage - 1;
   const nextPag = currentPage + 1;
-  const firstPage = currentPage - (currentPage - 1);
   const totalPages = Math.ceil(allCountries.length / countriesPerPage);
-  const lastPage = totalPages;
 
+  
   const handlePrevPage = () => {
     setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
   };
-
+  
   const handleNextPage = () => {
     setCurrentPage((currentPage) => Math.min(currentPage + 1, totalPages));
   };
@@ -29,23 +28,28 @@ const Cards = () => {
   const handleFirstPage = () => {
     setCurrentPage((currentPage) => currentPage - (currentPage - 1));
   };
-
+  
   const handleLastPage = () => {
     setCurrentPage((currentPage) => totalPages);
   };
-
+  
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
   const currentCountries = allCountries.slice(
     indexOfFirstCountry,
     indexOfLastCountry
-  );
+    );
+    
+    useEffect(() => { //cada vez que modifico allCountries setea la current page en 1
+      setCurrentPage(1)
+    }, [allCountries]);
 
-  useEffect(() => {
-    dispatch(getCountries());
-  }, []);
 
-  return (
+    useEffect(() => {
+      dispatch(getCountries());
+    }, []);
+    
+    return (
     <div className={styles.cards_container}>
       <div className={styles.card_filters}>
         <FilterAndSort />
