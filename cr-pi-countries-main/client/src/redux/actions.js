@@ -36,7 +36,7 @@ export function getCountriesByName(payload) {
                 payload: response.data
             });
         } catch (error) {
-            console.log(error)
+            alert('Error 404: Country not found', window.location.reload())
         }
     }
 }

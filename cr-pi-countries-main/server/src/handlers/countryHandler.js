@@ -20,7 +20,7 @@ const getCountries = async (req, res) => {
             c.name.toLowerCase().includes(name.toLowerCase()))
         return filteredCountries.length ?
             res.status(200).send(filteredCountries) :
-            res.status(400).send(error.message)
+            res.status(400).send('Country not found')
     }
     if (!allCountries.length) {
         let apiResponse = await axios.get(URL)

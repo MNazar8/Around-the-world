@@ -48,6 +48,7 @@ export default function reducer(state = initialState, { type, payload }) {
             const allCountriesFiltered = payload === "All"
                 ? state.filteredCountries
                 : state.filteredCountries.filter(country => country.continent === payload);
+                console.log(allCountriesFiltered);
 
             return {
                 ...state,

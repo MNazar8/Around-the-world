@@ -7,21 +7,17 @@ import styles from "../Cards/Cards.module.css";
 
 const Cards = () => {
   const dispatch = useDispatch();
-  const allCountries = useSelector(
-    (state) => state.filteredCountries
-  );
+  const allCountries = useSelector((state) => state.filteredCountries);
 
   const countriesPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const prevPage = currentPage - 1;
   const nextPag = currentPage + 1;
-  const totalPages = Math.ceil(allCountries.length / countriesPerPage);
 
-  
   const handlePrevPage = () => {
     setCurrentPage((currentPage) => Math.max(currentPage - 1, 1));
   };
-  
+
   const handleNextPage = () => {
     setCurrentPage((currentPage) => Math.min(currentPage + 1, totalPages));
   };
@@ -29,28 +25,33 @@ const Cards = () => {
   const handleFirstPage = () => {
     setCurrentPage((currentPage) => currentPage - (currentPage - 1));
   };
-  
+
   const handleLastPage = () => {
     setCurrentPage((currentPage) => totalPages);
   };
-  
+
   const indexOfLastCountry = currentPage * countriesPerPage;
   const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
   const currentCountries = allCountries.slice(
     indexOfFirstCountry,
     indexOfLastCountry
-    );
-    
-    useEffect(() => { //cada vez que modifico allCountries setea la current page en 1
-      setCurrentPage(1)
-    }, [allCountries]);
+  );
 
+  const totalPages = Math.ceil(
+    (allCountries.length ? allCountries.length : 0 )/ countriesPerPage
+  );
+  console.log(totalPages);
 
-    useEffect(() => {
-      dispatch(getCountries());
-    }, []);
-    
-    return (
+  useEffect(() => {
+    //cada vez que modifico allCountries setea la current page en 1
+    setCurrentPage(1);
+  }, [allCountries]);
+
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
+
+  return (
     <div className={styles.cards_container}>
       <div className={styles.card_filters}>
         <FilterAndSort />
@@ -67,23 +68,25 @@ const Cards = () => {
           />
         ))}
       </div>
-      <div>
-        <div className={styles.pagination}>
+      <div>        
+        <div className={styles.pagination}>          
+          {totalPages<1?
+        <button>0</button>:
+          <div>
           <button onClick={handleFirstPage}>First</button>
           <button onClick={handlePrevPage} hidden={currentPage === 1}>
             {prevPage}
           </button>
           <button className={styles.selected}>{currentPage}</button>
-          <button
-            onClick={handleNextPage}
-            hidden={currentPage === totalPages}
-          >
+          <button onClick={handleNextPage} hidden={currentPage === totalPages}>
             {nextPag}
           </button>
           <button onClick={handleLastPage}>Last</button>
+          </div>
+        }          
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 

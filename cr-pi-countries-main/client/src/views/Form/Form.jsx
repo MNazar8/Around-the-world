@@ -12,7 +12,7 @@ function createActivity() {
   const sortedCountries = allCountries.sort((a, b) =>
     a.name > b.name ? 1 : b.name > a.name ? -1 : 0
   );
-  const existingActivities = useSelector((state) => state.activities);
+  // const existingActivities = useSelector((state) => state.activities);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [active, setActive] = useState(false);
@@ -144,13 +144,15 @@ function createActivity() {
       input.name.includes("0")
     ) {
       errors.name = "*Write without numbers";
-    } else if (
-      existingActivities.find(
-        (activity) => activity.name.toLowerCase() === input.name.toLowerCase()
-      )
-    ) {
-      errors.name = `*Activity named -${input.name}- already exists`;
-    } else if (!input.difficulty) {
+    } 
+    // else if (
+    //   existingActivities.find(
+    //     (activity) => activity.name.toLowerCase() === input.name.toLowerCase()
+    //   )
+    // ) {
+    //   errors.name = `*Activity named -${input.name}- already exists`;
+    // } 
+    else if (!input.difficulty) {
       errors.difficulty = "Difficulty is required";
     } else if (
       input.difficulty!=1 &&
