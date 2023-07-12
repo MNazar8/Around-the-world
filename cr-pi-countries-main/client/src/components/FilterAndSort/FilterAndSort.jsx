@@ -63,7 +63,6 @@ const FilterAndSort = () => {
             <option value="" >
               Order By Name
             </option>
-            <option value="All">ALL</option>
             <option value="OrderAZ">Order A-Z </option>
             <option value="OrderZA">Order Z-A</option>
           </select>
@@ -107,7 +106,6 @@ const FilterAndSort = () => {
             <option value="" hidden>
               Order By Population
             </option>
-            <option value="All">ALL</option>
             <option value="Minortomajor">Order Minor To Major</option>
             <option value="MajortoMinor">Order Major To Minor</option>
           </select>

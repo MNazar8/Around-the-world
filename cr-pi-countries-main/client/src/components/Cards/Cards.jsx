@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountries } from "../../redux/actions";
-import Card from "../Card/card";
+import Card from "../Card/Card";
 import FilterAndSort from "../FilterAndSort/FilterAndSort";
 import styles from "../Cards/Cards.module.css";
 
 const Cards = () => {
   const dispatch = useDispatch();
   const allCountries = useSelector(
-    (state) => state.filteredCountries || state.countries
+    (state) => state.filteredCountries
   );
+
   const countriesPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const prevPage = currentPage - 1;
@@ -62,6 +63,7 @@ const Cards = () => {
             name={individualCountry.name}
             imgFlag={individualCountry.imgFlag}
             continent={individualCountry.continent}
+            // population  = {individualCountry.population}
           />
         ))}
       </div>
