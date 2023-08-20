@@ -38,7 +38,7 @@ const Cards = () => {
   );
 
   const totalPages = Math.ceil(
-    (allCountries.length ? allCountries.length : 0 )/ countriesPerPage
+    (allCountries.length ? allCountries.length : 0) / countriesPerPage
   );
   console.log(totalPages);
 
@@ -68,25 +68,29 @@ const Cards = () => {
           />
         ))}
       </div>
-      <div>        
-        <div className={styles.pagination}>          
-          {totalPages<1?
-        <button>0</button>:
-          <div>
-          <button onClick={handleFirstPage}>First</button>
-          <button onClick={handlePrevPage} hidden={currentPage === 1}>
-            {prevPage}
-          </button>
-          <button className={styles.selected}>{currentPage}</button>
-          <button onClick={handleNextPage} hidden={currentPage === totalPages}>
-            {nextPag}
-          </button>
-          <button onClick={handleLastPage}>Last</button>
-          </div>
-        }          
+      <div className={styles.paginationContainer}>
+        <div className={styles.pagination}>
+          {totalPages < 1 ? (
+            <button>0</button>
+          ) : (
+            <div className={styles.paginationChildren}>
+              <button onClick={handleFirstPage}>First</button>
+              <button onClick={handlePrevPage} hidden={currentPage === 1}>
+                {prevPage}
+              </button>
+              <button className={styles.selected}>{currentPage}</button>
+              <button
+                onClick={handleNextPage}
+                hidden={currentPage === totalPages}
+              >
+                {nextPag}
+              </button>
+              <button onClick={handleLastPage}>Last</button>
+            </div>
+          )}
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
